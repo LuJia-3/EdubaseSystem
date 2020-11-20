@@ -1,0 +1,40 @@
+﻿using System;
+using SmartLinli.DatabaseDevelopement;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace LogIn
+{
+    public partial class frm_SignUp : Form
+    {
+        public frm_SignUp()
+        {
+            InitializeComponent();
+            this.AcceptButton = this.btn_SignUp;
+            this.StartPosition = FormStartPosition.CenterScreen;
+        }
+
+        private void btn_SignUp_Click(object sender, EventArgs e)
+        {
+            string commandText =
+                $@"INSERT tb_Student(No,Password)
+					VALUES
+					('{this.txb_StudentNo.Text.Trim()}','{this.txb_Password.Text.Trim()}');";
+            SqlHelper sqlHelper = new SqlHelper();
+            int rowAffected = sqlHelper.QuickSubmit(commandText);
+            if (rowAffected == 1)
+            {
+                MessageBox.Show("注册成功。");
+            }
+            else
+            {
+                MessageBox.Show("注册失败！");
+            }
+        }
+    }
+}
